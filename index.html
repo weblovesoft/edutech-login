@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login & Registration - Weblovesoft EduTech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:"Poppins", sans-serif; }
+    body { background: #f9fafc; color: #333; }
+    header { background: #2b3a55; color: #fff; padding: 10px 30px; display:flex; justify-content: space-between; align-items:center; position: sticky; top:0; z-index:1000; }
+    .logo { display:flex; align-items:center; }
+    .logo img { height:50px; margin-right:12px; }
+    nav a { color:#fff; margin:0 12px; text-decoration:none; font-weight:500; }
+    nav a:hover { color:#ffce00; }
+    .menu-toggle { display:none; font-size:1.8rem; cursor:pointer; }
+    @media (max-width:768px){
+      nav { position:absolute; top:70px; right:0; background:#2b3a55; width:200px; flex-direction:column; display:none; padding:15px; border-radius:8px 0 0 8px; }
+      nav.active{ display:flex; }
+      nav a { margin:10px 0; }
+      .menu-toggle{ display:block; color:#fff; }
+    }
+    .hero { height:30vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1581091870623-64f6ef168a90') center/cover no-repeat; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; color:#fff; padding:20px; }
+    .hero h2 { font-size:2rem; margin-bottom:10px; }
+    .container { max-width:400px; margin:30px auto; background:#fff; padding:30px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+    .container h2 { text-align:center; margin-bottom:20px; color:#2b3a55; }
+    input[type=text], input[type=password], select { width:100%; padding:12px; margin:10px 0; border-radius:5px; border:1px solid #ccc; }
+    button.btn { width:100%; padding:12px; background:#ffce00; border:none; border-radius:25px; cursor:pointer; font-weight:bold; margin-top:10px; transition:0.3s; }
+    button.btn:hover { background:#ffc107; transform:scale(1.05); }
+    p { text-align:center; margin-top:15px; }
+    a { color:#2b3a55; text-decoration:underline; cursor:pointer; }
+    footer { background:#2b3a55; color:#fff; text-align:center; padding:20px 10px; margin-top:40px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="logo.png" alt="Weblovesoft Logo">
+    <span>Weblovesoft EduTech</span>
+  </div>
+  <i class="fas fa-bars menu-toggle"></i>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#">About</a>
+    <a href="#">Courses</a>
+    <a href="#">Contact</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Login & Registration</h2>
+  <p>Access your live courses and tuition classes</p>
+</section>
+
+<div class="container" id="form-container">
+  <h2>Register</h2>
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+
+  <select id="subscription" onchange="updateCourses()">
+    <option value="recorded">Recorded Courses</option>
+    <option value="paid">Paid Live Courses</option>
+    <option value="tuition">Tuition Classes</option>
+  </select>
+
+  <select id="course"></select>
+
+  <button class="btn" onclick="register()">Register</button>
+  <p>Already have an account? <a onclick="showLogin()">Login</a></p>
+</div>
+
+<footer>
+  <p>© 2025 Weblovesoft EduTech. All Rights Reserved.</p>
+</footer>
+
+<script>
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbzVfG62JPxYJLUAA84HhtSrSwu-1Mu0wl_pUxfx9oPuD2hQpSE2DWqtylLPWV8e3CwemQ/exec"; // Replace with deployed Apps Script URL
+
+// Mobile menu toggle
+const menuToggle = document.querySelector(".menu-toggle");
+const nav = document.querySelector("nav");
+menuToggle.addEventListener("click", () => nav.classList.toggle("active"));
+
+// Course options
+const courseOptions = {
+  recorded: ["Java", "Python", "C++"],
+  paid: ["Full Stack Web", "Data Science", "AI/ML"],
+  tuition: ["Computer Science", "Mathematics", "Physics"]
+};
+
+function updateCourses() {
+  const sub = document.getElementById("subscription").value;
+  const courseSelect = document.getElementById("course");
+  courseSelect.innerHTML = "";
+  courseOptions[sub].forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c;
+    opt.textContent = c;
+    courseSelect.appendChild(opt);
+  });
+}
+updateCourses(); // run on page load
+
+// Register
+function register(){
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const subscription = document.getElementById("subscription").value;
+  const course = document.getElementById("course").value;
+  if(!username || !password){ alert("Fill all fields"); return; }
+
+  fetch(`${SHEET_URL}?action=register&username=${username}&password=${password}&subscription=${subscription}&course=${course}`)
+  .then(res=>res.json())
+  .then(data=>{ alert(data.message); if(data.status=="success") showLogin(); })
+  .catch(err=>alert("Error connecting"));
+}
+
+// Login
+function login(){
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  if(!username || !password){ alert("Fill all fields"); return; }
+
+  fetch(`${SHEET_URL}?action=login&username=${username}&password=${password}`)
+  .then(res=>res.json())
+  .then(data=>{ 
+    alert(data.message); 
+    if(data.status=="success"){ 
+      // Redirect based on subscription & course
+      if (data.subscription === "recorded") {
+        window.location.href = `Recorded_${data.course}.html`;
+      } else if (data.subscription === "paid") {
+        window.location.href = `Paid_${data.course}.html`;
+      } else if (data.subscription === "tuition") {
+        window.location.href = `Tuition_${data.course}.html`;
+      } else {
+        window.location.href = "index.html"; // fallback
+      }
+    }
+  })
+  .catch(err=>alert("Error connecting"));
+}
+
+// Change Password
+function changePassword(){
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  if(!username || !password){ alert("Fill all fields"); return; }
+  fetch(`${SHEET_URL}?action=change&username=${username}&password=${password}`)
+  .then(res=>res.json())
+  .then(data=>{ alert(data.message); })
+  .catch(err=>alert("Error connecting"));
+}
+
+// Switch between forms
+function showLogin(){
+  document.getElementById("form-container").innerHTML=`
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button class="btn" onclick="login()">Login</button>
+    <p>Forgot password? <a onclick="showChange()">Change Password</a></p>
+    <p>Don't have an account? <a onclick="showRegister()">Register</a></p>
+  `;
+}
+
+function showRegister(){
+  document.getElementById("form-container").innerHTML=`
+    <h2>Register</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <select id="subscription" onchange="updateCourses()">
+      <option value="recorded">Recorded Courses</option>
+      <option value="paid">Paid Live Courses</option>
+      <option value="tuition">Tuition Classes</option>
+    </select>
+    <select id="course"></select>
+    <button class="btn" onclick="register()">Register</button>
+    <p>Already have an account? <a onclick="showLogin()">Login</a></p>
+  `;
+  updateCourses();
+}
+
+function showChange(){
+  document.getElementById("form-container").innerHTML=`
+    <h2>Change Password</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="New Password">
+    <button class="btn" onclick="changePassword()">Change Password</button>
+    <p>Back to <a onclick="showLogin()">Login</a></p>
+  `;
+}
+</script>
+
+</body>
+</html>

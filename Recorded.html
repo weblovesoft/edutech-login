@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recorded Courses - Weblovesoft EduTech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #f9fafc;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Navbar */
+    header {
+      background: #2b3a55;
+      color: #fff;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 50px;
+      margin-right: 12px;
+    }
+
+    .logo-text {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      transition: max-height 0.3s ease;
+    }
+
+    nav a {
+      color: #fff;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: #ffce00;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: #fff;
+      border-radius: 3px;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: #2b3a55;
+        flex-direction: column;
+        width: 200px;
+        max-height: 0;
+        overflow: hidden;
+      }
+
+      nav.show {
+        max-height: 300px;
+      }
+
+      nav a {
+        margin: 12px;
+        text-align: center;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* Hero */
+    .hero {
+      height: 40vh;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1529070538774-1843cb3265df') center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+
+    /* Courses Grid */
+    .courses {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .course-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .course-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .course-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .course-content {
+      padding: 20px;
+    }
+
+    .course-content h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #2b3a55;
+    }
+
+    .course-content p {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      color: #555;
+    }
+
+    .course-meta {
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      color: #777;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn.free {
+      background: #28a745;
+      color: #fff;
+    }
+
+    .btn.free:hover {
+      background: #218838;
+      transform: scale(1.05);
+    }
+
+    /* Footer */
+    footer {
+      background: #2b3a55;
+      color: #fff;
+      text-align: center;
+      padding: 20px 10px;
+      margin-top: 40px;
+    }
+
+    .social-icons {
+      margin: 15px 0;
+    }
+
+    .social-icons a {
+      color: #fff;
+      font-size: 1.5rem;
+      margin: 0 10px;
+      transition: 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: #ffce00;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Weblovesoft Logo">
+      <span class="logo-text">Weblovesoft EduTech</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#">About</a>
+      <a href="#">Courses</a>
+      <a href="#">Contact</a>
+      <a href="#">Login</a>
+    </nav>
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Recorded Courses</h1>
+  </section>
+
+  <!-- Courses Grid -->
+  <section class="courses">
+    <div class="course-card">
+      <img src="python.jfif" alt="Python Course">
+      <div class="course-content">
+        <h3>Python Programming</h3>
+        <p>Master Python with hands-on projects and real-world examples.</p>
+        <div class="course-meta">Duration: 20 hrs</div>
+        <a href="https://www.youtube.com/watch?v=kqtD5dpn9C8" target="_blank" class="btn free">Free Access</a>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085" alt="Web Development">
+      <div class="course-content">
+        <h3>Web Development</h3>
+        <p>Learn HTML, CSS, JavaScript and build modern websites.</p>
+        <div class="course-meta">Duration: 25 hrs</div>
+        <a href="https://www.youtube.com/watch?v=3JluqTojuME" target="_blank" class="btn free">Free Access</a>
+      </div>
+    </div>
+
+    <div class="course-card">
+      <img src="java.png" alt="Java Course">
+      <div class="course-content">
+        <h3>Java Programming</h3>
+        <p>Get strong basics of Java for backend and Android development.</p>
+        <div class="course-meta">Duration: 30 hrs</div>
+        <a href="https://www.youtube.com/watch?v=RRubcjpTkks" target="_blank" class="btn free">Free Access</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Weblovesoft EduTech. All Rights Reserved.</p>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/weblovesoftedutech-edutech-b17386384/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://wa.me/7013814450" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      <a href="mailto:weblovesoftedutech@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.querySelector('nav');
+    hamburger.addEventListener('click', () => {
+      nav.classList.toggle('show');
+    });
+  </script>
+</body>
+</html>

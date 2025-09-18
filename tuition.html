@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Tuition Classes - Weblovesoft EduTech</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { font-family: "Poppins", sans-serif; background: #f9fafc; margin: 0; color: #333; }
+    header { background: #2b3a55; color: #fff; padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; }
+    .logo { display: flex; align-items: center; }
+    .logo img { height: 50px; margin-right: 12px; }
+    nav a { color: #fff; margin: 0 12px; text-decoration: none; font-weight: 500; }
+    nav a:hover { color: #ffce00; }
+    .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; }
+    @media (max-width: 768px) {
+      nav { position: absolute; top: 70px; right: 0; background: #2b3a55; width: 200px; flex-direction: column; display: none; padding: 15px; border-radius: 8px 0 0 8px; }
+      nav.active { display: flex; }
+      nav a { margin: 10px 0; }
+      .menu-toggle { display: block; color: #fff; }
+    }
+    .hero { height: 50vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1581091870623-64f6ef168a90') center/cover no-repeat; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff; padding: 20px; }
+    .hero h2 { font-size: 2rem; margin-bottom: 10px; }
+    .btn { padding: 12px 25px; background: #ffce00; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; text-decoration: none; color: #333; transition: 0.3s; margin-top: 5px; display: inline-block; }
+    .btn:hover { background: #ffc107; transform: scale(1.05); }
+    footer { background: #2b3a55; color: #fff; text-align: center; padding: 20px 10px; margin-top: 40px; }
+    .container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px 20px; background: #fff; margin: 20px auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 600px; }
+    .notes { margin-top: 10px; }
+    .notes a { display: block; color: #2b3a55; text-decoration: underline; margin-bottom: 5px; }
+    .notes a:hover { color: #ffce00; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="logo.png" alt="Weblovesoft Logo">
+    <span>Weblovesoft EduTech</span>
+  </div>
+  <i class="fas fa-bars menu-toggle"></i>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#">About</a>
+    <a href="#">Courses</a>
+    <a href="#">Contact</a>
+    <a href="#">Login</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Live Tuition Classes</h2>
+  <p>Click below to join your live tuition session and access study materials</p>
+</section>
+
+<div id="tuition-container">
+  <!-- Dynamic tuition classes will appear here -->
+</div>
+
+<footer>
+  <p>© 2025 Weblovesoft EduTech. All Rights Reserved.</p>
+</footer>
+
+<script>
+  const menuToggle = document.querySelector(".menu-toggle");
+  const nav = document.querySelector("nav");
+  menuToggle.addEventListener("click", () => nav.classList.toggle("active"));
+
+  // Array of live tuition classes with notes/materials
+  const tuitionClasses = [
+    {
+      name: "Mathematics Tuition",
+      startTime: "Mon, Wed & Fri | 5PM - 6PM",
+      meetLink: "https://meet.google.com/math-tuition",
+      notes: [
+        { title: "Algebra Notes", link: "https://drive.google.com/algebra.pdf" },
+        { title: "Geometry Notes", link: "https://drive.google.com/geometry.pdf" }
+      ]
+    },
+    {
+      name: "Physics Tuition",
+      startTime: "Tue & Thu | 6PM - 7PM",
+      meetLink: "https://meet.google.com/physics-tuition",
+      notes: [
+        { title: "Mechanics Notes", link: "https://drive.google.com/mechanics.pdf" },
+        { title: "Optics Notes", link: "https://drive.google.com/optics.pdf" }
+      ]
+    },
+    {
+      name: "Chemistry Tuition",
+      startTime: "Sat | 10AM - 12PM",
+      meetLink: "https://meet.google.com/chem-tuition",
+      notes: [
+        { title: "Organic Chemistry", link: "https://drive.google.com/organic.pdf" },
+        { title: "Inorganic Chemistry", link: "https://drive.google.com/inorganic.pdf" }
+      ]
+    },
+    {
+      name: "Computer Science Tuition",
+      startTime: "Mon & Thu | 7PM - 8PM",
+      meetLink: "https://meet.google.com/cs-tuition",
+      notes: [
+        { title: "Python Basics", link: "https://drive.google.com/python.pdf" },
+        { title: "Data Structures", link: "https://drive.google.com/ds.pdf" }
+      ]
+    }
+  ];
+
+  const container = document.getElementById("tuition-container");
+
+  // Function to open all notes in new tabs
+  function openAllNotes(notes) {
+    notes.forEach(note => window.open(note.link, "_blank"));
+  }
+
+  // Function to render tuition classes with notes and "Download All Notes" button
+  function renderTuitionClasses() {
+    container.innerHTML = "";
+    tuitionClasses.forEach(cls => {
+      const div = document.createElement("div");
+      div.className = "container";
+      let notesHTML = "";
+      if (cls.notes && cls.notes.length > 0) {
+        notesHTML = '<div class="notes"><strong>Notes & Materials:</strong>';
+        cls.notes.forEach(note => {
+          notesHTML += `<a href="${note.link}" target="_blank">${note.title}</a>`;
+        });
+        notesHTML += '</div>';
+        // Add Download All Notes button
+        notesHTML += `<button class="btn" onclick='openAllNotes(${JSON.stringify(cls.notes)})'>Download All Notes</button>`;
+      }
+      div.innerHTML = `
+        <h3>${cls.name}</h3>
+        <p>Live Session Starts On: <strong>${cls.startTime}</strong></p>
+        <a href="${cls.meetLink}" target="_blank" class="btn">Join Live Class</a>
+        ${notesHTML}
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  renderTuitionClasses();
+</script>
+
+</body>
+</html>
